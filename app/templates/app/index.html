@@ -1,0 +1,92 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="http://i.gtimg.cn/qzone/biz/gdt/lib/jquery/jquery-2.1.4.js?max_age=31536000"></script>
+<script src='https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js'></script>
+
+<div class="container">
+  <h1><center>Differently diagnosing Cushing’s disease (CD) and ectopic corticotropin (ACTH) secretion syndrome (EAS) </center></h1>
+  <p>Hello, dear doctor or medical student: </p>
+  <p>This is a machine learning-based model to differently diagnose Cushing’s disease (CD) and ectopic corticotropin (ACTH) secretion (EAS). </p>
+  <p>Firstly, the patient to diagnose must have been diagnosed as ACTH-dependent Cushing’s syndrome, before you input the information. </p>
+  <p>Please follow the instructions in the input box to input information. The website will give a diagnostic tendency. </p>
+  <p>Note: This diagnostic tendency is for reference only, please make the final decision based on the specific clinical situation. The model developer is not responsible for the clinical diagnosis.</p>
+  <form id="info_form" action="{% url 'app:submit'%}" method="post">
+  {% csrf_token %}
+  <fieldset>
+  <legend><h3><strong>Question:</strong></h3></legend>
+    <!-- Q1 -->
+    <div class="form-group">
+      <label for="age">1. Age</label>
+      <input type="text" class="form-control" name="age" id="age" placeholder="Subject age (years)" required>
+    </div>
+    <!-- Q2 -->
+    <div class="form-group">
+        <label for="gender">2. Gender</label>
+        <div class="radio">
+          <label><input type="radio" name="gender" id="gender" value="0" required>male</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="gender" id="gender" value="2" required>female</label>
+        </div>
+    </div>
+    <!-- Q3 -->
+    <div class="form-group">
+      <label for="bmi">3. BMI</label>
+      <input type="text" class="form-control" name="bmi" id="bmi" placeholder="Subject BMI (kg/m2)" required>
+    </div>
+    <!-- Q4 -->
+    <div class="form-group">
+      <label for="duration_of_disease">4. Duration of disease</label>
+      <input type="text" class="form-control" name="duration_of_disease" id="duration_of_disease" placeholder="Subject duration from symptoms appearance to disease diagnosis (months" required>
+    </div>
+    <!-- Q5 -->
+    <div class="form-group">
+      <label for="mc">5. MC</label>
+      <input type="text" class="form-control" name="mc" id="mc" placeholder="Morning cortisol (μg/dl)" required>
+    </div>
+    <!-- Q6 -->
+    <div class="form-group">
+      <label for="acth">6. ACTH</label>
+      <input type="text" class="form-control" name="acth" id="acth" placeholder="ACTH (ng/L)" required>
+    </div>
+    <!-- Q7 -->
+    <div class="form-group">
+      <label for="24h_ufc">7. 24h-UFC</label>
+      <input type="text" class="form-control" name="24h_ufc" id="24h_ufc" placeholder="24h-UFC (μg/24h)" required>
+    </div>
+    <!-- Q8 -->
+    <div class="form-group">
+      <label for="k">8. K</label>
+      <input type="text" class="form-control" name="k" id="k" placeholder="Serum potassium(mmol/L)" required>
+    </div>
+    <!-- Q9 -->
+    <div class="form-group">
+      <label for="hddst">9. HDDST</label>
+      <input type="text" class="form-control" name="hddst" id="hddst" placeholder="The ratio of after HDDST 24hUFC / baseline 24hUFC" required>
+    </div>
+    <!-- Q10 -->
+    <div class="form-group">
+      <label for="lddst">10. LDDST</label>
+      <input type="text" class="form-control" name="lddst" id="lddst" placeholder="The ratio of after LDDST 24hUFC / baseline 24hUFC" required>
+    </div>
+    <!-- Q11 -->
+    <div class="form-group">
+      <label for="mri">11. MRI</label>
+      <input type="text" class="form-control" name="mri" id="mri" placeholder="The maximum length of the pituitary lesion in MRI (mm)" required>
+    </div> 
+    <!-- 提交按钮 -->
+    </br><button type="submit" class="btn btn-info">submit</button></br></br>
+  </fieldset>
+  </form>
+</div>
+
+<script>
+  $('#info_form').submit(function() {
+    $(this).ajaxSubmit(function(message) { 
+      message = "Note：The pred_class [1] refers to Cushing’s disease (CD), and the pred_class [0] refers to ectopic ACTH secretion syndrome (EAS). The left prob refers to the probability of diagnosing with EAS, and the right prob refers to the probability of diagnosing with CD. \nThe result is: \n" + message;
+      alert(message);  
+    });
+    return false; //阻止表单默认提交
+ }); 
+</script>
