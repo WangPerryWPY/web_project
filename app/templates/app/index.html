@@ -5,24 +5,38 @@
 <script src='https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js'></script>
 
 <div class="container">
-  <h1><center>Differently diagnosing Cushing’s disease (CD) and ectopic corticotropin (ACTH) secretion syndrome (EAS) </center></h1>
-  <p>Hello, dear doctor or medical student: </p>
+  <h2>Differently diagnosing Cushing’s disease (CD) and ectopic corticotropin (ACTH) secretion syndrome (EAS)</h2>
+  <h3>鉴别诊断库欣病和异位ACTH分泌综合征</h3>
+  <br/>
+  <p>Hello, dear doctor or medical student, </p>
+  <p>亲爱的医生或医学生，您好，</p>
+  <br/>
   <p>This is a machine learning-based model to differently diagnose Cushing’s disease (CD) and ectopic corticotropin (ACTH) secretion (EAS). </p>
+  <p>这是一个基于机器学习算法建立的诊断模型，用于鉴别诊断库欣病（CD）和异位ACTH分泌综合征（EAS）。</p>
+  <br/>
   <p>Firstly, the patient to diagnose must have been diagnosed as ACTH-dependent Cushing’s syndrome, before you input the information. </p>
+  <p>首先，录入到该模型中的患者需已在临床被确诊为ACTH依赖性库欣综合征。</p>
+  <br/>
   <p>Please follow the instructions in the input box to input information. The website will give a diagnostic tendency. </p>
+  <p>之后，请您按照输入框提示输入临床信息。网站将返给您诊断倾向。</p>
+  <br/>
   <p>Note: This diagnostic tendency is for reference only, please make the final decision based on the specific clinical situation. The model developer is not responsible for the clinical diagnosis.</p>
+  <p>请注意：该机器学习诊断倾向仅作参考，请依据临床具体情况由专科医生作出最终诊断意见。该诊断模型的开发者团队并不对具体临床诊断负责。
+  <br/><br/>
   <form id="info_form" action="{% url 'app:submit'%}" method="post">
   {% csrf_token %}
   <fieldset>
-  <legend><h3><strong>Question:</strong></h3></legend>
+  {% comment %} <legend><h3><strong>Question:</strong></h3></legend> {% endcomment %}
     <!-- Q1 -->
     <div class="form-group">
-      <label for="age">1. Age</label>
-      <input type="text" class="form-control" name="age" id="age" placeholder="Subject age (years)" required>
+      <label for="age">1. Subject age (years) </label>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;患者年龄（岁）</p>
+      <input type="text" class="form-control" name="age" id="age" required>
     </div>
     <!-- Q2 -->
     <div class="form-group">
-        <label for="gender">2. Gender</label>
+        <label for="gender">2. Subject gender (male or female)</label>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;患者性别（男性或女性）</p>
         <div class="radio">
           <label><input type="radio" name="gender" id="gender" value="0" required>male</label>
         </div>
@@ -32,48 +46,57 @@
     </div>
     <!-- Q3 -->
     <div class="form-group">
-      <label for="bmi">3. BMI</label>
-      <input type="text" class="form-control" name="bmi" id="bmi" placeholder="Subject BMI (kg/m2)" required>
+      <label for="bmi">3. Subject BMI (kg/m2)</label>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;患者BMI（kg/m2）</p>
+      <input type="text" class="form-control" name="bmi" id="bmi" required>
     </div>
     <!-- Q4 -->
     <div class="form-group">
-      <label for="duration_of_disease">4. Duration of disease</label>
-      <input type="text" class="form-control" name="duration_of_disease" id="duration_of_disease" placeholder="Subject duration from symptoms appearance to disease diagnosis (months" required>
+      <label for="duration_of_disease">4. Subject duration from symptoms appearance to disease diagnosis (months)</label>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;患者从症状出现到诊断为ACTH依赖性库欣综合征的时长（月）</p>
+      <input type="text" class="form-control" name="duration_of_disease" id="duration_of_disease" required>
     </div>
     <!-- Q5 -->
     <div class="form-group">
-      <label for="mc">5. MC</label>
-      <input type="text" class="form-control" name="mc" id="mc" placeholder="Morning cortisol (μg/dl)" required>
+      <label for="mc">5. Morning cortisol (μg/dl)</label>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;患者清晨血皮质醇浓度(μg/dl)</p>
+      <input type="text" class="form-control" name="mc" id="mc" required>
     </div>
     <!-- Q6 -->
     <div class="form-group">
-      <label for="acth">6. ACTH</label>
-      <input type="text" class="form-control" name="acth" id="acth" placeholder="ACTH (ng/L)" required>
+      <label for="acth">6. ACTH (ng/L)</label>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;患者血ACTH浓度(ng/L)</p>
+      <input type="text" class="form-control" name="acth" id="acth" required>
     </div>
     <!-- Q7 -->
     <div class="form-group">
-      <label for="24h_ufc">7. 24h-UFC</label>
-      <input type="text" class="form-control" name="24h_ufc" id="24h_ufc" placeholder="24h-UFC (μg/24h)" required>
+      <label for="24h_ufc">7. 24h-UFC (μg/24h)</label>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;患者24小时尿游离皮质醇(μg/24h)</p>
+      <input type="text" class="form-control" name="24h_ufc" id="24h_ufc" required>
     </div>
     <!-- Q8 -->
     <div class="form-group">
-      <label for="k">8. K</label>
-      <input type="text" class="form-control" name="k" id="k" placeholder="Serum potassium(mmol/L)" required>
+      <label for="k">8. Serum potassium(mmol/L) </label>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;患者血钾浓度(mmol/L)</p>
+      <input type="text" class="form-control" name="k" id="k" required>
     </div>
     <!-- Q9 -->
     <div class="form-group">
-      <label for="hddst">9. HDDST</label>
-      <input type="text" class="form-control" name="hddst" id="hddst" placeholder="The ratio of after HDDST 24hUFC / baseline 24hUFC" required>
+      <label for="hddst">9. The ratio of after HDDST 24hUFC / baseline 24hUFC</label>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;大剂量地塞米松抑制试验 抑制后24hUFC/抑制前24hUFC 比值</p>
+      <input type="text" class="form-control" name="hddst" id="hddst" required>
     </div>
     <!-- Q10 -->
     <div class="form-group">
-      <label for="lddst">10. LDDST</label>
-      <input type="text" class="form-control" name="lddst" id="lddst" placeholder="The ratio of after LDDST 24hUFC / baseline 24hUFC" required>
+      <label for="lddst">10. The ratio of after LDDST 24hUFC / baseline 24hUFC</label>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;小剂量地塞米松抑制试验 抑制后24hUFC/抑制前24hUFC 比值</p>
+      <input type="text" class="form-control" name="lddst" id="lddst" required>
     </div>
     <!-- Q11 -->
     <div class="form-group">
-      <label for="mri">11. MRI</label>
-      <input type="text" class="form-control" name="mri" id="mri" placeholder="The maximum length of the pituitary lesion in MRI (mm)" required>
+      <label for="mri">11. The maximum length of the pituitary lesion in MRI (mm)</label>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;核磁共振中垂体病变占位最大径（mm）</p>
+      <input type="text" class="form-control" name="mri" id="mri" required>
     </div> 
     <!-- 提交按钮 -->
     </br><button type="submit" class="btn btn-info">submit</button></br></br>
@@ -84,7 +107,6 @@
 <script>
   $('#info_form').submit(function() {
     $(this).ajaxSubmit(function(message) { 
-      message = "Note：The pred_class [1] refers to Cushing’s disease (CD), and the pred_class [0] refers to ectopic ACTH secretion syndrome (EAS). The left prob refers to the probability of diagnosing with EAS, and the right prob refers to the probability of diagnosing with CD. \nThe result is: \n" + message;
       alert(message);  
     });
     return false; //阻止表单默认提交
