@@ -29,4 +29,25 @@ def submit(request):
   pred_class, prob = predict(x)
   print(pred_class)
   print(prob)
-  return HttpResponse("pred_class: " + str(pred_class) + "\nprob: " + str(prob))
+  if pred_class.size != 1:
+    return HttpResponse("Invalid Input!")
+  if prob.size != 2:
+    return HttpResponse("Invalid Input!")
+  pred_value = pred_class[0]
+  prob_eas = prob[0][0]
+  prob_eas_rate = '%.2f%%' % (prob_eas * 100)
+  prob_cd = prob[0][1]
+  prob_cd_rate = '%.2f%%' % (prob_cd * 100)
+  message = ""
+  if pred_value == 1:
+    message = "The diagnostic tendency for this patient is CD. The probability of diagnosing with EAS is " + prob_eas_rate + ". The probability of diagnosing with CD is " + prob_cd_rate + ".\n"
+    message += "该患者的机器学习模型诊断倾向是CD。他/她患有EAS的可能性为 " + prob_eas_rate + "，患有CD的可能性为" + prob_cd_rate + "。\n"
+  else:
+    message = "The diagnostic tendency for this patient is EAS. The probability of diagnosing with EAS is " + prob_eas_rate + ". The probability of diagnosing with CD is " + prob_cd_rate + ".\n"
+    message += "该患者的机器学习模型诊断倾向是EAS。他/她患有EAS的可能性为 " + prob_eas_rate + "，患有CD的可能性为" + prob_cd_rate + "。\n"
+
+  message += "\nNote: This diagnostic tendency is for reference only, please make the final decision based on the specific clinical situation. The model developer is not responsible for the clinical diagnosis.\n";
+  message += "请注意：该诊断倾向仅作参考，最终诊断须由医生依据具体临床情况决定。该诊断模型的开发者团队并不对具体临床诊断负责。\n";
+
+  return HttpResponse(message)
+
