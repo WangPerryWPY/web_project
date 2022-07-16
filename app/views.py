@@ -16,16 +16,29 @@ def index(request):
 def submit(request):
   age = int(request.POST['age'])
   gender = int(request.POST['gender'])
-  bmi = float(request.POST['bmi'])
   duration_of_disease = float(request.POST['duration_of_disease'])
-  mc = float(request.POST['mc'])
-  acth = float(request.POST['acth'])
-  ufc = float(request.POST['24h_ufc'])
+  bmi = float(request.POST['bmi'])
   k = float(request.POST['k'])
+
+  mc_unit = int(request.POST['mc_unit'])
+  mc = float(request.POST['mc'])
+  if mc_unit == 2:
+    mc = 0.036247 * mc
+  
+  acth_unit = int(request.POST['acth_unit'])
+  acth = float(request.POST['acth'])
+  if acth_unit == 3:
+    acth = 4.54 * acth
+  
+  ufc_unit = int(request.POST['24h_ufc_unit'])
+  ufc = float(request.POST['24h_ufc'])
+  if ufc_unit == 2:
+    ufc = 0.36247 * ufc
+  
   hddst = float(request.POST['hddst'])
   lddst = float(request.POST['lddst'])
   mri = float(request.POST['mri'])
-  x = np.array([age, gender, bmi, duration_of_disease, mc, acth, ufc, k, hddst, lddst, mri]).reshape(1, 11)
+  x = np.array([age, gender, duration_of_disease, bmi, k, mc, acth, ufc, hddst, lddst, mri]).reshape(1, 11)
   pred_class, prob = predict(x)
   print(pred_class)
   print(prob)
